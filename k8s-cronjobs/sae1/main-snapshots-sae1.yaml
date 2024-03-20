@@ -1,0 +1,67 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: main-snapshots-sae1
+  namespace: jfrog-saas-rds-automation
+  labels:
+    customerName: devops-infra
+    owner: devops
+    subscriptionType: thirdparty
+    purpose: infra
+    environment: production
+spec:
+  concurrencyPolicy: Forbid
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      ttlSecondsAfterFinished: 86400
+      template:
+        metadata:
+          labels:
+            application: main-snapshots
+            customerName: devops-infra
+            owner: devops
+            subscriptionType: thirdparty
+            purpose: infra
+            environment: production     
+            region: sa-east-1
+          annotations:
+            logging_index: devops-infra      
+        spec:        
+          serviceAccountName: rds-automation-main
+          restartPolicy: Never
+          imagePullSecrets:
+            - name: repo21edgesaliasingress-jfrog-io-pull-secret
+          containers:
+            - name: main-snapshots-sae1
+              image: repo21edgesaliasingress.jfrog.io/enterprise-docker/jfrog/devops/rds-automation:v1.11
+              imagePullPolicy: IfNotPresent
+              command: ["python", "app/main_snapshots.py"]
+              env:
+                - name: APPLICATION
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.labels['application']         
+                - name: ENVIRONMENT
+                  value: "Production"
+                - name: SOURCE_ACCOUNT_ID
+                  value: "152153062141"
+                - name: DST_ACCOUNT_ID
+                  value: "851725374165"
+                - name: REGION
+                  value: "sa-east-1"
+                - name: SLACK_WEBHOOK_URL
+                  value: "https://hooks.slack.com/services/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"
+                - name: NUM_RETENTION
+                  value: "2"
+              resources:
+                requests:
+                  memory: "300Mi"
+                  cpu: "50m"
+                limits:
+                  memory: "300Mi"
+                  cpu: "50m"
+              securityContext:
+                allowPrivilegeEscalation: false 
+                
