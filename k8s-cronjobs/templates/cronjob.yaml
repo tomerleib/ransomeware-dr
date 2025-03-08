@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: rds-backup-${REGION}
+  namespace: backup-system
+spec:
+  schedule: "0 1 * * *"  # Run daily at 1 AM
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: rds-backup-sa
+          containers:
+          - name: rds-backup
+            image: ${REGISTRY}/rds-backup:latest
+            imagePullPolicy: Always
+            env:
+            - name: AWS_REGION
+              value: ${REGION}
+            - name: TARGET_REGIONS
+              value: ${TARGET_REGIONS}
+            - name: SLACK_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secrets
+                  key: slack-token
+            - name: SLACK_CHANNEL
+              value: "#rds-backups"
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "100m"
+              limits:
+                memory: "512Mi"
+                cpu: "200m"
+          restartPolicy: OnFailure

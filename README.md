@@ -28,11 +28,10 @@ The AWS RDS backup solution provides automated snapshot management with enhanced
 
 ## GCP Backup Implementation
 
-The Google Cloud Platform backup solution focuses on secure cloud storage management:
+The Google Cloud SQL backup solution focuses on creating a snapshot from one project to another:
 
 ### Key Features
 - Automated backup creation and management
-- Multi-region replication for disaster recovery
 - Backup validation and integrity checking
 - Retention policy management
 - Cloud Function-based implementation
@@ -47,7 +46,6 @@ The Google Cloud Platform backup solution focuses on secure cloud storage manage
 ### Security Features
 - Cloud KMS encryption
 - IAM-based access control
-- Secure key management
 - Cross-project replication capabilities
 
 ## Getting Started
@@ -62,29 +60,6 @@ The Google Cloud Platform backup solution focuses on secure cloud storage manage
 1. Set up GCP service account with appropriate permissions
 2. Deploy Cloud Functions using provided configurations
 3. Configure backup retention policies
-4. Set up monitoring and alerting
-
-## Configuration
-
-### AWS Configuration
-```yaml
-# Example configuration
-region: us-east-1
-backup_retention_days: 30
-cross_account_id: "123456789012"
-notification_channel: "#backup-alerts"
-```
-
-### GCP Configuration
-```yaml
-# Example configuration
-project_id: your-project-id
-backup_bucket: backup-storage
-retention_days: 30
-replication_regions:
-  - us-central1
-  - europe-west1
-```
 
 ## Contributing
 
