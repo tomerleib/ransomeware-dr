@@ -44,7 +44,6 @@ The Google Cloud SQL backup solution focuses on creating a snapshot from one pro
   - Retention management
 
 ### Security Features
-- Cloud KMS encryption
 - IAM-based access control
 - Cross-project replication capabilities
 
@@ -60,15 +59,3 @@ The Google Cloud SQL backup solution focuses on creating a snapshot from one pro
 1. Set up GCP service account with appropriate permissions
 2. Deploy Cloud Functions using provided configurations
 3. Configure backup retention policies
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Note
-
-This project was initially developed as an internal tool and has been migrated to this public repository for broader use and collaboration.

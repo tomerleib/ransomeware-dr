@@ -1,0 +1,7 @@
+google-auth==2.30.0
+google-api-python-client==2.133.0
+python-json-logger==2.0.7
+functions-framework==3.5.0
+google-cloud-pubsub==2.21.4
+python-dateutil==2.9.0
+coralogix-logger==2.0.6
