@@ -1,9 +1,9 @@
 name: 'Build and Deploy Pulumi Cloud Function'
 
 on:
-  push:
-    branches:
-      - 'main'
+  pull_request:
+    paths:
+      - 'pulumi-cloud-function/**'
 
 jobs:
   preview:
