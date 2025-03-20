@@ -37,3 +37,4 @@ jobs:
           work-dir: pulumi-cloud-function
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}

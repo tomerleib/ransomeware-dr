@@ -4,8 +4,7 @@ from .shared_imports import (
     ComponentResource,
     ResourceOptions,
     serviceaccount,
-    projects,
-    config
+    projects
 )
 
 class ServiceAccount(ComponentResource):
@@ -24,13 +23,13 @@ class ServiceAccount(ComponentResource):
                  description: Optional[str] = None, 
                  roles: Optional[List[str]] = None,
                  display_name: Optional[str] = None,
-                 project: Optional[str] = None,
+                 gcp_project: Optional[str] = None,
                  disabled: bool = False,
                  opts: Optional[ResourceOptions] = None):
         self.name = name
         self.description = description
         self.roles = roles
-        self.project = project or config.project
+        self.project = gcp_project
         self.opts = opts
 
         super().__init__('custom:resource:ServiceAccount', name, {}, opts)
@@ -45,6 +44,7 @@ class ServiceAccount(ComponentResource):
         'name': self.sa.name,
         'display_name': self.sa.display_name,
         'description': self.sa.description,
+        'project': self.project,
     })
     def create_service_account(self):
         self.sa = serviceaccount.Account(
@@ -67,3 +67,4 @@ class ServiceAccount(ComponentResource):
                     ),
                     opts=ResourceOptions(parent=self.sa, depends_on=[self.sa])
                 )
+    
