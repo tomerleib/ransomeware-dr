@@ -4,7 +4,7 @@ from components.shared_imports import pulumi, Config, os
 from components.sa import ServiceAccount
 
 gcp_config = Config("gcp")
-project = os.environ.get("GOOGLE_PROJECT")
+gcp_project = os.environ.get("GOOGLE_PROJECT")
 region = gcp_config.require("region")
 sa_config = Config("serviceaccount")
 sa_name = sa_config.require("name")
@@ -17,8 +17,8 @@ function_sa = ServiceAccount(
     description=sa_description,
     roles=sa_roles,
     display_name=sa_display_name,
-    project=project,
-    region=region,
+    gcp_project=gcp_project,
+    region=region
 )
 
 
