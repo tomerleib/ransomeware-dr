@@ -24,3 +24,5 @@ function_sa = ServiceAccount(
 export("sa_name", sa_config["name"])
 export("sa_email", function_sa.sa.email)
 export("region", gcp_config["region"])
+export("project", gcp_project)
+export("project_id", function_sa.sa.project)

@@ -44,6 +44,7 @@ class ServiceAccount(ComponentResource):
         'name': self.sa.name,
         'display_name': self.sa.display_name,
         'description': self.sa.description,
+        'project': self.project,
     })
     def create_service_account(self):
         self.sa = serviceaccount.Account(
@@ -66,3 +67,4 @@ class ServiceAccount(ComponentResource):
                     ),
                     opts=ResourceOptions(parent=self.sa, depends_on=[self.sa])
                 )
+    
