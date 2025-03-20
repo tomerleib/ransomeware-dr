@@ -2,3 +2,4 @@
 env_vars
 __pycache__
 venv/
+.vscode/
