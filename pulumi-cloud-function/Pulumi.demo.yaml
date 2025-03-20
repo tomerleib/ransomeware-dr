@@ -1,11 +1,11 @@
 config:
   gcp:region: us-east1
-  serviceaccount:
-    name: cloud-function-sa
+  pulumi-cloud-function:serviceaccount:
     description: Cloud Function Service Account Demo
+    display_name: Cloud Function Demo Service Account
+    name: cloud-function-sa
     roles:
       - roles/artifactregistry.writer
       - roles/logging.logWriter
       - roles/storage.objectViewer
       - roles/editor
-    display_name: Cloud Function Demo Service Account

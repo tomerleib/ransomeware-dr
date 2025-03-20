@@ -29,7 +29,8 @@ jobs:
       - name: Install Dependencies
         working-directory: pulumi-cloud-function
         run: pip install -r requirements.txt
-      - uses: pulumi/actions@v6
+      - name: Pulumi Preview
+        uses: pulumi/actions@v6
         with:
           command: preview
           stack-name: demo

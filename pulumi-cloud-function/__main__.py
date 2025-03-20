@@ -1,25 +1,25 @@
-"""A Google Cloud Python Pulumi program"""
+"""A Google Cloud Python Pulumi program that creates a service account for a Cloud Function."""
 
-from components.shared_imports import pulumi, Config, os
+from components.shared_imports import export, os
 from components.sa import ServiceAccount
+from components.config import get_config
 
-gcp_config = Config("gcp")
-gcp_project = os.environ.get("GOOGLE_PROJECT")
-region = gcp_config.require("region")
-sa_config = Config("serviceaccount")
-sa_name = sa_config.require("name")
-sa_description = sa_config.require("description")
-sa_roles = sa_config.require_object("roles")
-sa_display_name = sa_config.require("display_name")
+# Get GCP configuration (namespaced)
+gcp_config = get_config(namespace="gcp", required_fields=["region"])
+gcp_config["project"] = os.environ.get("GOOGLE_PROJECT")
 
+# Get service account configuration (non-namespaced)
+sa_config = get_config(required_fields=["name", "description", "roles", "display_name"])
+
+# Create service account
 function_sa = ServiceAccount(
-    sa_name,
-    description=sa_description,
-    roles=sa_roles,
-    display_name=sa_display_name,
-    gcp_project=gcp_project,
-    region=region
+    sa_config["name"],
+    description=sa_config["description"],
+    roles=sa_config["roles"],
+    display_name=sa_config["display_name"],
+    gcp_project=gcp_config["project"],
 )
 
-
-pulumi.export("function_sa_email", function_sa.sa.email)
+# Export values
+export("sa_name", sa_config["name"])
+export("sa_email", function_sa.sa.email)
