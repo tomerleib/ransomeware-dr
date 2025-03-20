@@ -7,6 +7,7 @@ on:
 
 jobs:
   preview:
+    name: Preview
     runs-on: ubuntu-latest
 
     permissions:
@@ -19,18 +20,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: 3.11        
-      - name: Authticate to GCP
+      - name: Authenticate to GCP
         uses: 'google-github-actions/auth@v2'
         with:
           project_id: ${{ secrets.GOOGLE_PROJECT }}
-          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY }}
       - name: Install Dependencies
         working-directory: pulumi-cloud-function
         run: pip install -r requirements.txt
       - uses: pulumi/actions@v6
         with:
-          command: preview --diff
-          stack-name: dev
+          command: preview
+          stack-name: demo
+          work-dir: pulumi-cloud-function
+          diff: true
+          # comment-on-pr: true
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       

@@ -1,0 +1,30 @@
+name: Pulumi
+on:
+  push:
+    branches:
+      - main
+jobs:
+  update:
+    name: Update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+      - name: Authenticate to GCP
+        uses: 'google-github-actions/auth@v2'
+        with:
+          project_id: ${{ secrets.GOOGLE_PROJECT }}
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY }}
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+      - uses: pulumi/actions@v6
+        with:
+          command: up
+          stack-name: demo
+          work-dir: pulumi-cloud-function
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
