@@ -1,5 +1,5 @@
-from typing import Optional, List, Input
-from pulumi import ComponentResource, ResourceOptions, Output, Resource, Config
+from typing import Optional, List
+from pulumi import ComponentResource, ResourceOptions, Output, Resource, Config, Input
 from pulumi_gcp import (
     cloudfunctionsv2,
     pubsub,
