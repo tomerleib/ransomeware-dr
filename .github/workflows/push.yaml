@@ -25,7 +25,7 @@ jobs:
         with:
           project_id: ${{ secrets.GOOGLE_PROJECT }}
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY }}
-          service_account: pulumi@dwh-dev-414206.iam.gserviceaccount.com
+          service_account: pulumi@${{ secrets.GOOGLE_PROJECT }}.iam.gserviceaccount.com
       - name: Install Dependencies
         working-directory: pulumi-cloud-function
         run: pip install -r requirements.txt
