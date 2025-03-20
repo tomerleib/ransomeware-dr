@@ -6,7 +6,7 @@ from components.config import get_config
 
 # Get GCP configuration (namespaced)
 gcp_config = get_config(namespace="gcp", required_fields=["region"])
-gcp_config["project"] = os.environ.get("GOOGLE_PROJECT")
+gcp_project = os.environ.get("GOOGLE_PROJECT")
 
 # Get service account configuration (non-namespaced)
 sa_config = get_config(required_fields=["name", "description", "roles", "display_name"])
@@ -17,9 +17,10 @@ function_sa = ServiceAccount(
     description=sa_config["description"],
     roles=sa_config["roles"],
     display_name=sa_config["display_name"],
-    gcp_project=gcp_config["project"],
+    gcp_project=gcp_project
 )
 
 # Export values
 export("sa_name", sa_config["name"])
 export("sa_email", function_sa.sa.email)
+export("region", gcp_config["region"])
