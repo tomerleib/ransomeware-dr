@@ -94,7 +94,7 @@ function = FunctionComponent(
     build_config_runtime=function_config["build_config_runtime"],
     build_config_entry_point=function_config["build_config_entry_point"],
     build_config_storage_bucket=storage.bucket.name,
-    build_config_storage_object=storage.object_object.name,
+    build_config_storage_object=storage.bucket_object.name,
     service_account_email=function_sa.sa.email,
     pubsub_topic=Output.all(gcp_project, pubsub_topic.topic.name).apply(
         lambda args: f"projects/{args[0]}/topics/{args[1]}"
