@@ -46,10 +46,6 @@ function_config = get_config(
     ],
 )
 
-# Get storage configuration (non-namespaced)
-storage_config = get_config(
-    config_key="storage", required_fields=["name", "location"]
-)
 
 # Create service account
 function_sa = ServiceAccount(
@@ -102,12 +98,6 @@ function = FunctionComponent(
     timeout_seconds=function_config["timeout_seconds"],
 )
 
-# Create storage bucket
-storage = StorageComponent(
-    storage_config["name"],
-    location=storage_config["location"],
-    object_path=SOURCE_CODE_DIR
-)
 
 # Export values
 export("sa_name", sa_config["name"])
