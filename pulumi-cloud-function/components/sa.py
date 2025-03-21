@@ -30,7 +30,9 @@ class ServiceAccount(ComponentResource):
         self.description = description
         self.roles = roles
         self.project = gcp_project
+        self.display_name = display_name if display_name else name
         self.opts = opts
+        self.disabled = disabled
 
         super().__init__('custom:resource:ServiceAccount', name, {}, opts)
         
@@ -44,14 +46,14 @@ class ServiceAccount(ComponentResource):
         'name': self.sa.name,
         'display_name': self.sa.display_name,
         'description': self.sa.description,
-        'project': self.project,
     })
     def create_service_account(self):
         self.sa = serviceaccount.Account(
             self.name,
             account_id=self.name,
-            display_name=self.name,
+            display_name=self.display_name,
             description=self.description,
+            disabled=self.disabled,
             opts=self.opts
         )
         
