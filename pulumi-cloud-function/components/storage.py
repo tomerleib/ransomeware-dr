@@ -24,7 +24,7 @@ class StorageComponent(ComponentResource):
         location: str,
         opts: Optional[ResourceOptions] = None,
     ):
-        super().__init__(f"{__name__}:{name}", name, {}, opts)
+        super().__init__('custom:components:storage', name, {}, opts)
         opts = ResourceOptions(parent=self)
         self.name = name
         self.object_path = object_path
