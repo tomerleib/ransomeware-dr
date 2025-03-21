@@ -21,3 +21,10 @@ config:
   pulumi-cloud-function:storage:
     name: demo-storage-for-cloud-function
     location: US
+  pulumi-cloud-function:function:
+    name: demo-cloud-function
+    location: us-east1
+    description: Demo Cloud Function
+    build_config_runtime: python39
+    build_config_entry_point: retention
+    timeout_seconds: 540
