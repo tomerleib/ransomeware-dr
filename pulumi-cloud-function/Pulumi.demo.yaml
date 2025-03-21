@@ -12,3 +12,9 @@ config:
   pulumi-cloud-function:pubsub:
     name: demo-topic
     message_retention_duration: 600s
+  pulumi-cloud-function:cloud-scheduler:
+    name: demo-scheduler
+    description: Demo Cloud Scheduler
+    schedule: "0 1 * * *"
+    time_zone: "America/New_York"
+    message_body: "Run Cloud Function"
