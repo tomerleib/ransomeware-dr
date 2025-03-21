@@ -54,7 +54,6 @@ function_sa = ServiceAccount(
     roles=sa_config["roles"],
     display_name=sa_config["display_name"],
     gcp_project=gcp_project,
-    ignore_existing=True,
 )
 
 # Create pubsub topic
