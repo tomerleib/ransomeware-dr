@@ -54,7 +54,7 @@ class ServiceAccount(ComponentResource):
             display_name=self.display_name,
             description=self.description,
             disabled=self.disabled,
-            opts=self.opts
+            opts=ResourceOptions(parent=self)
         )
         
     def add_iam_role_membership(self):
@@ -67,6 +67,6 @@ class ServiceAccount(ComponentResource):
                     member=self.sa.email.apply(
                         lambda email: f"serviceAccount:{email}"
                     ),
-                    opts=ResourceOptions(parent=self.sa, depends_on=[self.sa])
+                    opts=ResourceOptions(parent=self)
                 )
     

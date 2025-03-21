@@ -51,6 +51,7 @@ class StorageComponent(ComponentResource):
         self.bucket = storage.Bucket(
             self.name,
             location=self.location,
+            opts=ResourceOptions(parent=self)
         )
 
     def upload_archive(self, zip_path):
@@ -58,6 +59,7 @@ class StorageComponent(ComponentResource):
             f"{self.name}-archive",
             bucket=self.bucket.name,
             source=pulumi.FileAsset(zip_path),
+            opts=ResourceOptions(parent=self)
         )
 
     def register_component_outputs(self):
