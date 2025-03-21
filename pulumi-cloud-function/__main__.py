@@ -8,7 +8,7 @@ from components.scheduler import Scheduler
 from components.storage import StorageComponent
 from components.function import FunctionComponent
 
-SOURCE_CODE_DIR = "../gcp/cloud-functions"
+SOURCE_CODE_DIR = "../gcp/cloud-function"
 # Get GCP configuration (namespaced)
 gcp_config = get_config(namespace="gcp", required_fields=["region"])
 gcp_project = os.environ.get("GOOGLE_PROJECT")
