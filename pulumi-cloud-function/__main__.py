@@ -5,7 +5,9 @@ from components.sa import ServiceAccount
 from components.config import get_config
 from components.pubsub import PubSubTopic
 from components.scheduler import Scheduler
+from components.storage import StorageComponent
 
+SOURCE_CODE_DIR = "../gcp/cloud-functions"
 # Get GCP configuration (namespaced)
 gcp_config = get_config(namespace="gcp", required_fields=["region"])
 gcp_project = os.environ.get("GOOGLE_PROJECT")
@@ -25,6 +27,11 @@ pubsub_config = get_config(
 scheduler_config = get_config(
     config_key="cloud-scheduler",
     required_fields=["name", "description", "schedule", "time_zone", "message_body"]
+)
+
+# Get storage configuration (non-namespaced)
+storage_config = get_config(
+    config_key="storage", required_fields=["name", "location"]
 )
 
 # Create service account
@@ -53,6 +60,14 @@ scheduler = Scheduler(
         lambda args: f"projects/{args[0]}/topics/{args[1]}"
     )
 )
+
+# Create storage bucket
+storage = StorageComponent(
+    storage_config["name"],
+    location=storage_config["location"],
+    object_path=SOURCE_CODE_DIR
+)
+
 # Export values
 export("sa_name", sa_config["name"])
 export("sa_email", function_sa.sa.email)
