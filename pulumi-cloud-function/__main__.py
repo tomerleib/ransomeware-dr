@@ -5,7 +5,7 @@ from components.sa import ServiceAccount
 from components.config import get_config
 from components.pubsub import PubSubTopic
 from components.scheduler import Scheduler
-from components.storage import Storage
+from components.storage import StorageComponent
 
 SOURCE_CODE_DIR = "../gcp/cloud-functions"
 # Get GCP configuration (namespaced)
@@ -62,7 +62,7 @@ scheduler = Scheduler(
 )
 
 # Create storage bucket
-storage = Storage(
+storage = StorageComponent(
     storage_config["name"],
     location=storage_config["location"],
     object_path=SOURCE_CODE_DIR
