@@ -9,3 +9,6 @@ config:
       - roles/logging.logWriter
       - roles/storage.objectViewer
       - roles/editor
+  pulumi-cloud-function:pubsub:
+    name: demo-topic
+    message_retention_duration: 600s
