@@ -17,6 +17,7 @@ class ServiceAccount(ComponentResource):
         display_name: Optional[str], the display name of the service account
         project: Optional[str], the project to create the service account in
         disabled: bool, whether to disable the service account
+        ignore_existing: bool, if set to true, skip service account creation if a service account with the same email already exists.
     """
     def __init__(self, 
                  name: str, 
@@ -25,6 +26,7 @@ class ServiceAccount(ComponentResource):
                  display_name: Optional[str] = None,
                  gcp_project: Optional[str] = None,
                  disabled: bool = False,
+                 ignore_existing: bool = False,
                  opts: Optional[ResourceOptions] = None):
         self.name = name
         self.description = description
@@ -33,7 +35,7 @@ class ServiceAccount(ComponentResource):
         self.display_name = display_name if display_name else name
         self.opts = opts
         self.disabled = disabled
-
+        self.ignore_existing = ignore_existing
         super().__init__('custom:resource:ServiceAccount', name, {}, opts)
         
         self.create_service_account()
@@ -54,6 +56,7 @@ class ServiceAccount(ComponentResource):
             display_name=self.display_name,
             description=self.description,
             disabled=self.disabled,
+            create_ignore_already_exists=self.ignore_existing,
             opts=ResourceOptions(parent=self)
         )
         
