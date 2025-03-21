@@ -42,8 +42,6 @@ function_config = get_config(
         "description",
         "build_config_runtime",
         "build_config_entry_point",
-        "build_config_storage_bucket",
-        "build_config_storage_object",
         "timeout_seconds",
     ],
 )
